@@ -10,13 +10,9 @@ from joblib import load
 # load .env content to env vars
 load_dotenv()
 
-
-PROJECT_ROOT = Path(
-    os.getenv("PROJECT_ROOT", Path(__file__).resolve().parents[1])
-).resolve()
-MODEL_PATH = PROJECT_ROOT / os.getenv("MODEL_DIR") / os.getenv("MODEL_NAME")
-LOG_PATH = PROJECT_ROOT / os.getenv("LOG_DIR") / os.getenv("LOG_NAME")
-
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+MODEL_PATH = PROJECT_ROOT / "model_dir" / "heart_disease_prediction_model.joblib"
+LOG_PATH = PROJECT_ROOT / "logs" / "prediction.log"
 LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 logging.basicConfig(
