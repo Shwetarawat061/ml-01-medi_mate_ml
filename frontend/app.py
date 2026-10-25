@@ -19,28 +19,53 @@ st.write("Heart Disease Risk Predictor")
 
 st.subheader("Enter patient details and click **Predict**")
 
+def coded_choice(label, choices, default_code):
+    """Show readable category labels while sending the dataset's integer code."""
+    labels = [f"{description} (code {code})" for code, description in choices]
+    default_index = next(i for i, (code, _) in enumerate(choices) if code == default_code)
+    selected = st.selectbox(label, labels, index=default_index)
+    return choices[labels.index(selected)][0]
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
     age = st.number_input("Age", 1, 120, 52)
     sex = st.selectbox("Sex (1 = Male, 0 = Female)", [0, 1])
-    cp = st.number_input("Chest Pain Type (cp)", 0, 3, 0)
+    cp = coded_choice("Chest Pain Type (cp)", [
+        (0, "Typical angina"),
+        (1, "Atypical angina"),
+        (2, "Non-anginal pain"),
+        (3, "Asymptomatic"),
+    ], 0)
     trestbps = st.number_input("Resting Blood Pressure", 0, 250, 125)
     chol = st.number_input("Cholesterol", 0, 600, 212)
 
 
 with col2:
     fbs = st.selectbox("Fasting Blood Sugar > 120 mg/dl", [0, 1])
-    restecg = st.number_input("Resting ECG (restecg)", 0, 2, 1)
+    restecg = coded_choice("Resting ECG (restecg)", [
+        (0, "Normal"),
+        (1, "ST-T wave abnormality"),
+        (2, "Left ventricular hypertrophy"),
+    ], 1)
     thalach = st.number_input("Max Heart Rate (thalach)", 0, 250, 168)
     exang = st.selectbox("Exercise Induced Angina", [0, 1])
 
 
 with col3:
     oldpeak = st.number_input("Oldpeak (ST depression)", 0.0, 10.0, 1.0)
-    slope = st.number_input("Slope", 0, 2, 2)
+    slope = coded_choice("Slope of peak exercise ST segment (slope)", [
+        (0, "Downsloping"),
+        (1, "Flat"),
+        (2, "Upsloping"),
+    ], 2)
     ca = st.number_input("Number of Major Vessels (ca)", 0, 4, 0)
-    thal = st.number_input("Thal", 0, 3, 2)
+    thal = coded_choice("Thal (dataset code)", [
+        (0, "Normal"),
+        (1, "Fixed defect"),
+        (2, "Reversible defect"),
+        (3, "Unknown"),
+    ], 2)
 
 if st.button("🔍 Predict"):
     input_data = {

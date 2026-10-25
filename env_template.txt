@@ -1,4 +1,4 @@
-PROJECT_ROOT=Absolute path to project folder
+PROJECT_ROOT="D:\projects\ml-01-medi_mate_ml"
 
 LOG_DIR=logs
 DATASET_DIR=dataset
